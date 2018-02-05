@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html xmlns:="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="routes/bootstrap.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="routes/style.css" />
+    <style>
+        .form-card {
+            display: block;
+            text-align: center;
+            margin: 0 auto;
+            width: 650px;
+            height: 350px;
+            padding: 100px 0px;
+            background-color: #fff;
+        }
+
+        #ust{
+            background-color: #2BAAB1;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 35px;
+            font-family:'Monoton', cursive;
+            min-height: 50px;
+            font-weight: bold;
+
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #CDCDCD;
+            font-size: 1.3em;
+            cursor: pointer;
+        }
+        body { font: 13px Helvetica, Arial; width: 100% }
+        #messageform {
+
+            background: #ffffff;
+            padding: 3px;
+            position: fixed;
+            bottom: 0;
+            width: 60%;
+        }
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        #messages li {
+            padding: 5px 10px;
+            margin-top: 5px;
+        }
+      /*  #messages li:nth-child(odd) {
+            background:#aaffad;
+        }*/
+        #m {
+            width:80%;
+            background: url("/images/type2.png") no-repeat left center;
+            padding: 10px;
+            margin-right: 1%;
+            border:2px solid #25e6ff;
+            border-radius: 4px;
+            height: 25px;
+        }
+        #Gonder {
+            width: 13%;
+            height: auto;
+            background:#ffffff;
+            position:static;
+            border:2px solid #25e6ff;
+            padding: 10px;
+        }
+
+
+        #chat{
+
+            display:none;
+            background: #ffffff; padding: 3px;
+            overflow-y: scroll;
+            height: 475px;
+            position: fixed;
+            width: 60%;  }
+
+        #kullanici{
+
+            /* float:left;
+              width:40%;
+              border:0px #000 solid;
+          */
+            position: center;
+            margin: 0 auto;
+            background: white;
+            margin-top: 70px;
+            width: 350px;
+            border-radius: 5px;
+            border:2px #2BAAB1 solid;
+            box-shadow: 3px 3px 10px #333;
+            padding: 15px;
+
+        }
+        #kullanicigir{
+            position: relative;
+            display: block;
+            padding-top: 20px;
+            z-index: 999;
+        }
+
+        #kullanici_listesi{
+            float:right;
+            display: none;
+            min-height: 200px;
+            width: 35%;
+            margin-top: 10px;
+            margin-right: 15px;
+            padding: 0px;
+            overflow-y: scroll;
+            border:2px #3ee7ff solid;
+        }
+
+        #formRoom {
+            position:absolute;
+            background-color:#ffffff;
+            float:right;
+            width:35%;
+            overflow-y: scroll;
+            margin-right: 10px;
+            border:2px #3ee7ff solid;
+            height:200px;
+            top:300px;
+        }
+        .error{
+            color:red;
+            background: white;
+        }
+        .whisper{
+            color:darkmagenta;
+            background: #f4cdff;
+            font-style: italic;
+        }
+        .ozelmesaj{
+              color:black;
+              background: #eea236;
+              font-style: italic;
+
+                  }
+        .genelmesajlar{
+            color:black;
+            background: #5cb85c;
+            font-style: normal;
+
+        }
+        .odamesajı{
+            color:black;
+            background: #fff085;
+            font-style: normal;
+
+        }
+        #kullanici h2{
+            text-align: center;
+            font-weight: 200;
+            font-size: 2em;
+            text-decoration-style: solid;
+            margin-top: 10px;
+            font-family: 'Shrikhand', cursive;
+
+            color: #3071a9;
+        }
+        #kullanici p{
+            text-align: center;
+            font-size: 1em;
+            text-decoration-style: solid;
+            margin-top: 5px;
+            color: #d43f3a;
+
+        }
+        #kullaniciadi{
+            padding: 0 0 0 10px;
+            font-size: 14px;
+            height: 50px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid #3498db;
+        }
+        .butonlar{
+            width: 79%;
+            margin-left: 10%;
+            margin-bottom: 25px;
+            height: 40px;
+            border-radius: 5px;
+            background:#2BAAB1;
+            color:white;
+            outline: 0;
+            text:"Giris Yap";
+            margin-top: 15px;
+            -moz-outline-style: none;
+        }
+        #kullanici_listesi p{
+            text-align: center;
+            height: 15%;
+            font-weight: 900;
+            text-decoration: underline;
+            text-decoration-color: currentColor;
+            background: #2BAAB1;
+            color: white;
+        }
+        #OdaKurbutton{
+            position: absolute;
+            /* float: right; */
+            /* margin-top: 50px; */
+            bottom: 0;
+            right: 0;
+            margin: 20px;
+            padding: 5px;
+            background-color: moccasin;
+            font-family: monospace;
+            box-shadow: 2px 0 5px 1px #2BAAB1;
+            color: black;
+            /* background-color: white; */
+            /* text-shadow: 0 0 0px black; */
+        }
+        #roomlist a{
+                   display: block;
+            color: #1B1B1B;
+            background-color: #eea236;
+        }
+
+        #oda{
+
+            position: center;
+            margin: 0 auto;
+            background: white;
+            margin-top: 70px;
+            width: 350px;
+            display: none;
+            border-radius: 5px;
+            border:2px #2BAAB1 solid;
+            box-shadow: 3px 3px 10px #333;
+            padding: 15px;
+
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="row">
+    <div id="ust">CHAT ME
+    </div>
+</div>
+
+
+<!--Kullanıcı adı formu-->
+<div id="kullanici">
+    <h2>Hosgeldiniz</h2>
+    <p id="kullanici_adi_hatasi"></p>
+    <form id="kullanicigir">
+
+        <input size="45" id="kullaniciadi" autocomplete="off" placeholder="Kullanici adi Girin"> </input>
+        <input type="submit" id="kullanicibuton" class="butonlar"> </input>
+
+    </form>
+
+</div>
+
+
+<!--CHAT BOLUMU-->
+<div id="chat">
+<ul id="messages"></ul>
+<form id="messageform" action="" >
+    <input type="text" id="m" autocomplete="off" placeholder="Buraya yazın" /><button id="Gonder">Gonder</button>
+</form>
+</div>
+
+
+<!--KULLANOICI LİSTESİ-->
+
+<div id="kullanici_listesi">
+<p>AKTİF KULLANICILAR</p>
+    <ul id="aktif_kullanici"></ul>
+
+    <!--ODA LİSTESİ-->
+
+    <div id="formRoom">
+        <p>AKTİF ODALAR</p>
+        <ol type="1" id="roomlist" >
+        </ol>
+        <ul id="adlariyaz"></ul>
+        <button id="OdaKurbutton" >Oda kur</button>
+    </div>
+
+</div>
+
+<div id="oda">
+    <h2>ODA İSMİ GİRİNİZ</h2>
+    <p id="oda_ismi_mevcut"></p>
+    <form id="odaForm" action="">
+        <input size="45" id="oda_ismi" autocomplete="off" placeholder="Oda ismi Giriniz"> </input>
+       <!-- <input type="submit" class="butonlar" id="odaismi_al"> </input> -->
+        <!--   <button type="submit" class="butonlar" id="odaismi_al">Onayla</button> -->
+       </form>
+    <button  class="butonlar" id="ekle" >Kullanici Ekle</button>
+    <form id="kullaniekleform" action="" >
+        <input size="45" id="kullanici1" autocomplete="off" placeholder="Kullanici ismi Giriniz"> </input>
+        <input size="45" id="kullanici2" autocomplete="off" placeholder="Kullanici ismi Giriniz"> </input>
+    </form>
+    <button type="submit" class="butonlar" id="odaismi_al">Onayla</button>
+   </div>
+   <!-- ODA LİSTESİ -->
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+    $( "#ekle" ).click(function() {
+
+       // tik(kullanici3);
+        $('#kullaniekleform').append('<input id="kullanici3" size="45" placeholder="Kullanıcı ismi Giriniz">');
+
+    });
+
+   /* function tik(obj) {
+        id = obj.getAttribute("id");
+        document.getElementById("kullanici3").innerHTML = this.id;
+
+    }*/
+
+    $(function () {
+
+        var socket = io();
+
+        //KULLANICI ADI İÇİN
+        $('#kullanicigir').submit(function (e) {
+            e.preventDefault();
+
+
+                var kulIsmi = $('#kullaniciadi').val().trim();
+                document.title=kulIsmi;
+                if (kulIsmi === "") {
+                    $('#kullanici_adi_hatasi').html('Geçerli bir isim girin');
+                }
+            else {
+                    // if($('#kullaniciadi').val().empty()) {
+                    socket.emit('yeni kullanici', $('#kullaniciadi').val().trim(), function (msg) {
+
+                        if (msg) {
+
+                            $('#kullanici').hide();
+                            $('#chat').show();
+                            $('#kullanici_listesi').show();
+                            $('#oda').hide();
+
+                        }
+
+                        else {
+                            $('#kullanici_adi_hatasi').html('Bu kullanıcı adı daha onceden alınmıs');
+
+                        }
+
+                    });
+                    $('#kullaniciadi').val('');
+                }
+        });
+
+
+     $('#OdaKurbutton').click(function (e) {
+         //e.preventDefault();
+        $('#chat').hide();
+        $('#kullanici_listesi').hide();
+        $('#formRoom').hide();
+        $('#oda').show();
+        //  $('#kullanici').hide();
+
+
+    });
+
+
+
+            // ODA İSMİ İÇİN
+         $('#odaismi_al').click(function(e){
+           e.preventDefault();
+            var kullanicilar=[];
+            kullanicilar.push($('#kullanici1').val().trim());
+            kullanicilar.push($('#kullanici2').val().trim());
+
+             socket.emit('oda ismi', $('#oda_ismi').val(),kullanicilar,function (oda,kullanicilar) {
+               if(oda){
+                   $('#oda').hide();
+                   //$('#kullanici').hide();
+                   $('#chat').show();
+                   $('#formRoom').show();
+                   $('#kullanici_listesi').show();
+
+
+               }
+               else{
+                   $('#oda_ismi_mevcut').html('Bu oda Daha onceden alınmıs');
+
+
+               }
+                 $('#oda_ismi').val('');
+
+             });
+
+
+        });
+
+        socket.on('oda ekle',function (oda,kullanicilar) {
+            var html='Oda ';
+            var kullanici='Kullanicilar :';
+            for(var i=0;i< kullanicilar.length; i++){
+                kullanici+=kullanicilar[i]+","
+            }
+            for(var i=0;i< oda.length; i++){
+                html+=oda[i]+'<br/>'
+            }
+           // $('#roomlist').append($('<li href="kullaniciekle()">')).html(html);
+            $('#roomlist').html(html+kullanici);
+
+         //   $('#adlariyaz').html(kullanici);
+        });
+
+        //KULLANICI ADINI AKTİF KULLANICILAR YERINE EKLE veya SİL
+        socket.on('kullanici adi',function (msg) {
+            var html='';
+            for(var i=0;i< msg.length; i++){
+                html+=msg[i]+'<br/>'
+            }
+            $('#aktif_kullanici').html(html);
+        });
+
+
+        /*CIKIS VE GIRIS */
+
+        socket.on('cikisyapti',function(kullanici) {
+
+            $('#messages').append($('<li class="error">').text("Kullanici :"+ kullanici+" Offline"));
+
+        });
+        socket.on('girisyapti',function(kullanici) {
+
+            $('#messages').append($('<li class="error">').text("Kullanici :"+ kullanici+" Online"));
+
+        });
+
+        // ARANAN KULLANICI BULUNAMADI // "/w kullanici_adi ve mesaj girin" // CALLBACKTEN GELEN MESAJLAR İÇİN
+
+        $('#messageform').submit(function(e){
+            e.preventDefault(); //messajeformun varsayılan tum actionlarını  iptal et
+
+            $("#chat").animate({
+                scrollTop: $('#chat').prop("scrollHeight")
+            }, 1000);
+
+
+           /* socket.emit('oda mesajı', $('#m').val(),function (msg) {
+
+                $('#messages').append($('<li class="error">').text(msg));
+
+
+            });*/
+
+            socket.emit('chat message', $('#m').val(),function (msg) {
+
+                $('#messages').append($('<li class="error">').text(msg));
+
+                $("#chat").animate({
+                    scrollTop: $('#chat').prop("scrollHeight")
+                }, 1000);
+
+
+
+            });
+            $('#m').val('');
+            return false;
+        });
+
+        //NORMAL GENEL MESAJLAR İÇİN
+        socket.on('chat message', function(msg){
+            $('#messages').append($('<li class="genelmesajlar">'+'<b>').text(msg.isim+":"+msg.msg));
+
+            $("#chat").animate({
+                scrollTop: $('#chat').prop("scrollHeight")
+            }, 1000);
+
+            //mesajgoster(msg);
+            //  window.scrollTo(0,document.body.scrollHeight.valueOf(1000));
+        });
+
+
+
+        socket.on('eski mesajlari yukle',function(docs) {
+            for(var k=docs.length-1; k>=0; k--){
+                mesajgoster(docs[k]);
+            }
+        });
+
+
+        // OZel mesaj ıcın Kullanıcı onlıne olunca yuklenecek
+        socket.on('ozelmesaj',function (docs) {
+            for(var k=docs.length-1; k>=0; k--){
+                ozelmesaj(docs[k]);
+            }
+        });
+        // OZel mesaj ıcın Kullanıcı onlıne olunca yuklenecek
+        socket.on('gecikmeliodamesajı',function (docs) {
+            for(var k=docs.length-1; k>=0; k--){
+                odamesaj(docs[k]);
+            }
+        });
+        function odamesaj(msg) {
+            $('#messages').append($('<li class="odamesajı">'+'<b>').text(msg.gonderen+":"+msg.odaismi+":"+"Odasından Siz online değilken  ->>"+":"+msg.mesaj));
+
+            $("#chat").animate({
+                scrollTop: $('#chat').prop("scrollHeight")
+            }, 1000);
+
+        }
+        function ozelmesaj(msg) {
+            $('#messages').append($('<li class="ozelmesaj">'+'<b>').text(msg.kullanici_adi+":"+"Siz online değilken ->>"+":"+msg.mesaj));
+
+            $("#chat").animate({
+                scrollTop: $('#chat').prop("scrollHeight")
+            }, 1000);
+
+
+        }
+
+        function mesajgoster(msg) {
+            $('#messages').append($('<li class="genelmesajlar">'+'<b>').text(msg.kullanici_adi+":"+msg.mesaj));
+
+            $("#chat").animate({
+                scrollTop: $('#chat').prop("scrollHeight")
+            }, 1000);
+
+
+        }
+        socket.on('odamesajıgonder', function(msg){
+            $('#messages').append($('<li class="odamesajı">'+'<b>').text(msg.isim+": "+msg.oda+" odasından->>:"+msg.msg ));
+
+            $("#chat").animate({
+                scrollTop: $('#chat').prop("scrollHeight")
+            }, 1000);
+
+
+            // window.scrollTo(0,document.body.scrollHeight.valueOf(1000));
+        });
+            //Private MESAJ
+        socket.on('whisper', function(msg){
+            $('#messages').append($('<li class="whisper">'+'<b>').text(msg.isim+" Fısıltı->>:"+msg.msg ));
+
+            $("#chat").animate({
+                scrollTop: $('#chat').prop("scrollHeight")
+            }, 1000);
+
+
+            // window.scrollTo(0,document.body.scrollHeight.valueOf(1000));
+        });
+
+    });
+</script>
+
+
+</body>
+</html>
