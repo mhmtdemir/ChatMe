@@ -173,7 +173,7 @@ io.on('connection', function(socket){
     socket.on('chat message', function(msg,callback){
 
         var data=msg.trim();
-        if(data.substr(0,3)==='/f '){
+        if(data.substr(0,3)==='/w '){
             data=data.substr(3);
             var ind=data.indexOf(' ');
                 if(ind!== -1){
@@ -214,7 +214,7 @@ io.on('connection', function(socket){
                                         //socket.on(name).('ozel message', {msg: data, isim: socket.kullanici_adlari,alici:name});
 
                                     });
-                                    callback("Kullanıcı online değil ama  meşazınızı aldım!");
+                                    callback("Kullanıcı online değil oturum açınca iletilecek!");
                                 }
                             });
                         }
